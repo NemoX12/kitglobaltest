@@ -5,6 +5,7 @@ import ReduxProvider from "./store/ReduxProvider";
 
 const roboto = Roboto({
   variable: "--roboto-font",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
