@@ -26,8 +26,16 @@ export const postsSlice = createSlice({
     removePost: (state, action: PayloadAction<string>) => {
       state.posts = state.posts.filter((post) => post.id !== action.payload);
     },
+    editPost: (state, action: PayloadAction<PostType>) => {
+      const { id, content } = action.payload;
+      const postToEdit = state.posts.find((post) => post.id === id);
+
+      if (postToEdit) {
+        postToEdit.content = content;
+      }
+    },
   },
 });
 
-export const { addPosts, removePost, getAllPosts } = postsSlice.actions;
+export const { addPosts, removePost, getAllPosts, editPost } = postsSlice.actions;
 export default postsSlice.reducer;

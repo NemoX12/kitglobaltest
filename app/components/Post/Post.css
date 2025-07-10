@@ -4,7 +4,7 @@
   background: #fff;
 
   width: 100%;
-  max-height: 200px;
+  max-height: 250px;
 
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@
 }
 
 .post:hover {
-  background: #d7d7d7;
+  background: #ededed;
 }
 
 .post__header,
@@ -50,13 +50,60 @@
   padding: 0;
 
   cursor: pointer;
+
+  pointer-events: fill;
+
+  margin: 0 5px;
+}
+
+.post__body__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.post__body__form__input {
+  width: 90%;
+  height: 50px;
+  outline: none;
+  resize: none;
+  border: none;
+  background: #f4f4f4;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.post__body__form__input:focus {
+  outline: 1px solid #c1c1c1;
+}
+
+.form--error {
+  margin: 20px 0;
+  color: #ec2424;
+}
+
+.post__body__form__button {
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  background: #f8f8f8;
+  transition: background 0.2s ease;
+}
+
+.post__body__form__button:hover {
+  background: #d9d9d9;
 }
 
 .post--icon > svg {
   transition: all 0.2s ease;
 }
 
-.post--icon > svg:hover {
+.post--icon.delete > svg:hover {
   fill: rgb(239, 0, 0);
   transform: scale(1.1);
 }

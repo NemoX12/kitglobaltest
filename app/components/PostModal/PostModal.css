@@ -111,6 +111,10 @@
   padding: 10px;
 }
 
+.postmodal__post__footer__form__elt__input > input:focus {
+  outline: 1px solid #c1c1c1;
+}
+
 .postmodal__post__footer__form__elt__input > p {
   margin: 20px;
 }
