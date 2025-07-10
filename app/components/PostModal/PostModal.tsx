@@ -109,6 +109,7 @@ const PostModal = () => {
                   type="text"
                   onChange={(e) => setComment(e.target.value)}
                   value={comment}
+                  placeholder="Write a new comment..."
                 />
 
                 <p className="form--error">{error && error[0].message}</p>

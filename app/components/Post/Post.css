@@ -83,6 +83,7 @@
 .form--error {
   margin: 20px 0;
   color: #ec2424;
+  text-align: center;
 }
 
 .post__body__form__button {

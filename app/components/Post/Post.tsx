@@ -75,6 +75,7 @@ const Post = ({
             onSubmit={(e) => updatePost(e)}
           >
             <textarea
+              placeholder="Modify an existing post..."
               className="post__body__form__input"
               name="post__body__form__input"
               id="post__body__form__input"

@@ -51,6 +51,7 @@ const CreatePost = () => {
     <div className="createpost">
       <form className="createpost__form" onSubmit={(e) => createPost(e)}>
         <textarea
+          placeholder="Enter the content of a post..."
           name="createpostinput"
           id="createpostinput"
           className="createpost__form__input"

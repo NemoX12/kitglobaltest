@@ -51,10 +51,11 @@
 
   cursor: pointer;
 }
-
+/* dasda */
 .postmodal__post__body {
   width: 100%;
   margin: 25px 0;
+  flex: 1;
 }
 
 .postmodal__post__body__content {
@@ -69,6 +70,7 @@
   margin: 0;
   margin-bottom: 15px;
 }
+
 .postmodal__post__footer__comments__list {
   height: 130px;
   overflow-y: scroll;
@@ -116,7 +118,7 @@
 }
 
 .postmodal__post__footer__form__elt__input > p {
-  margin: 20px;
+  margin: 5px;
 }
 
 .postmodal__post__footer__form__elt > button {
@@ -131,4 +133,37 @@
 
 .postmodal__post__footer__form__elt > button:hover {
   background: #d9d9d9;
+}
+
+@media screen and (max-height: 768px) and (orientation: landscape) {
+  .postmodal__post {
+    height: 90%;
+    /* margin: 20px; */
+  }
+
+  .postmodal__post__footer__form {
+    margin-top: 0;
+  }
+
+  .postmodal__post__footer__comments {
+    margin: 15px 0;
+  }
+
+  .postmodal__post__footer__comments__heading {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .postmodal__post__footer__comments__list {
+    height: 50px;
+    overflow-y: scroll;
+  }
+
+  .postmodal__post__body {
+    margin: 5px 0;
+  }
+
+  .postmodal__post__body__content {
+    margin: 0;
+  }
 }
