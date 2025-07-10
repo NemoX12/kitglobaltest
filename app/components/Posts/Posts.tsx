@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import "./Posts.css";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import { db } from "@/app/config/firebaseConfig";
 import { getAllPosts, removePost } from "@/app/store/postsSlice";
 import { openModalAction } from "@/app/store/postModalSlice";
 import PostModal from "../PostModal/PostModal";
+import { RootState } from "@/app/store/postsStore";
 
 export type PostType = {
   id: string;
@@ -17,12 +18,14 @@ export type PostType = {
 };
 
 const Posts = () => {
-  const postsList: PostType[] = useSelector((state: any) => state.posts.posts);
-  const postsModal: PostType = useSelector((state: any) => state.postModal.post);
+  const postsList: PostType[] = useSelector((state: RootState) => state.posts.posts);
+  const postsModal: PostType | null = useSelector(
+    (state: RootState) => state.postModal.post
+  );
 
   const dispatch = useDispatch();
 
-  const getPosts = async () => {
+  const getPosts = useCallback(async () => {
     const postsSnap = await getDocs(collection(db, "posts"));
 
     const allPosts: PostType[] = postsSnap.docs.map((post) => ({
@@ -31,7 +34,7 @@ const Posts = () => {
     }));
 
     dispatch(getAllPosts(allPosts));
-  };
+  }, [dispatch]);
 
   const deletePost = async (id: string) => {
     await deleteDoc(doc(db, "posts", id));
@@ -44,7 +47,7 @@ const Posts = () => {
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [getPosts]);
 
   return (
     <>

@@ -5,15 +5,15 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { addPosts, getAllPosts } from "./postsSlice";
 import userEvent from "@testing-library/user-event";
 import { PostType } from "../components/Posts/Posts";
-import postsStore from "./postsStore";
+import postsStore, { RootState } from "./postsStore";
 
 const FetchPosts = ({ posts }: { posts: PostType[] }) => {
   const dispatch = useDispatch();
-  const allPosts = useSelector((state: any) => state.posts.posts);
+  const allPosts = useSelector((state: RootState) => state.posts.posts);
 
   useEffect(() => {
     dispatch(getAllPosts(posts));
-  }, []);
+  }, [dispatch, posts]);
 
   return (
     <div>
@@ -28,7 +28,7 @@ const FetchPosts = ({ posts }: { posts: PostType[] }) => {
 
 const AddPosts = ({ post }: { post: PostType }) => {
   const dispatch = useDispatch();
-  const allPosts = useSelector((state: any) => state.posts.posts);
+  const allPosts = useSelector((state: RootState) => state.posts.posts);
 
   useEffect(() => {
     const posts = [
@@ -41,7 +41,7 @@ const AddPosts = ({ post }: { post: PostType }) => {
     ];
 
     dispatch(getAllPosts(posts));
-  }, []);
+  }, [dispatch]);
 
   const addNewPost = () => {
     dispatch(addPosts([post]));

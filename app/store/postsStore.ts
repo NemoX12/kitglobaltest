@@ -11,4 +11,6 @@ const postsStore = configureStore({
   },
 });
 
+export type RootState = ReturnType<typeof postsStore.getState>;
+
 export default postsStore;

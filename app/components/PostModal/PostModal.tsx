@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./PostModal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
@@ -9,6 +9,7 @@ import * as z from "zod";
 import { db } from "@/app/config/firebaseConfig";
 import { $ZodIssue } from "zod/v4/core";
 import { addComments, getAllComments } from "@/app/store/postsCommentsSlice";
+import { RootState } from "@/app/store/postsStore";
 
 const CommentSchema = z.object({
   id: z.string(),
@@ -27,14 +28,20 @@ const PostModal = () => {
   const [comment, setComment] = useState<string>("");
   const [error, setError] = useState<$ZodIssue[] | null>();
 
-  const postsModal: PostType = useSelector((state: any) => state.postModal.post);
+  const postsModal: PostType | null = useSelector(
+    (state: RootState) => state.postModal.post
+  );
   const postsComments: CommentType[] = useSelector(
-    (state: any) => state.postComments.comments
+    (state: RootState) => state.postComments.comments
   );
   const dispatch = useDispatch();
 
   const postComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (postsModal === null) {
+      return;
+    }
 
     let data = {
       id: postsModal.id,
@@ -55,7 +62,11 @@ const PostModal = () => {
     setComment("");
   };
 
-  const getComments = async () => {
+  const getComments = useCallback(async () => {
+    if (postsModal === null) {
+      return;
+    }
+
     const q = query(collection(db, "comments"), where("id", "==", postsModal.id));
 
     const querySnapshot = await getDocs(q);
@@ -66,7 +77,7 @@ const PostModal = () => {
     }));
 
     dispatch(getAllComments(allComments));
-  };
+  }, [dispatch, postsModal]);
 
   const closeModal = () => {
     dispatch(closeModalAction());
@@ -74,19 +85,19 @@ const PostModal = () => {
 
   useEffect(() => {
     getComments();
-  }, []);
+  }, [getComments]);
 
   return (
     <div className="postmodal">
       <div className="postmodal__post">
         <div className="postmodal__post__header">
-          <p className="postmodal__post__header__heading">#{postsModal.id}</p>
+          <p className="postmodal__post__header__heading">#{postsModal?.id}</p>
           <button className="modal--icon" onClick={closeModal}>
             <FaTimes size={16} />
           </button>
         </div>
         <div className="postmodal__post__body">
-          <p className="postmodal__post__body__content">{postsModal.content}</p>
+          <p className="postmodal__post__body__content">{postsModal?.content}</p>
         </div>
         <div className="postmodal__post__footer">
           <div className="postmodal__post__footer__comments">
