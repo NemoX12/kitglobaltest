@@ -1,0 +1,13 @@
+.posts {
+  outline: 1px solid red;
+
+  width: 650px;
+  height: 100vh;
+}
+
+.posts__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
