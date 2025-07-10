@@ -1,9 +1,10 @@
 .post {
   box-sizing: border-box;
   border-bottom: 1px solid #dadada;
+  background: #fff;
 
   width: 100%;
-  min-height: 100px;
+  max-height: 200px;
 
   display: flex;
   flex-direction: column;
@@ -11,6 +12,14 @@
   justify-content: space-between;
 
   padding: 5px;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.post:hover {
+  background: #d7d7d7;
 }
 
 .post__header,
@@ -21,6 +30,10 @@
 
 .post__header__heading {
   margin: 0;
+}
+
+.post__body {
+  margin: 10px 0;
 }
 
 .post__body__content {
@@ -37,4 +50,13 @@
   padding: 0;
 
   cursor: pointer;
+}
+
+.post--icon > svg {
+  transition: all 0.2s ease;
+}
+
+.post--icon > svg:hover {
+  fill: rgb(239, 0, 0);
+  transform: scale(1.1);
 }

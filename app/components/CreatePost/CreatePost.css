@@ -1,5 +1,48 @@
 .createpost {
-  outline: 1px solid orange;
   width: 100%;
-  min-height: 100px;
+  height: 250px;
+  border-bottom: 1px solid #000;
+}
+
+.createpost__form {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.createpost__form__input {
+  width: 90%;
+  height: 100px;
+  resize: none;
+  border: none;
+  background: #f4f4f4;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.createpost__form__input:focus {
+  outline: 1px solid #c1c1c1;
+}
+
+.form--error {
+  margin: 0;
+  color: #ec2424;
+}
+
+.createpost__form__button {
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  background: #efefef;
+  transition: background 0.2s ease;
+}
+
+.createpost__form__button:hover {
+  background: #d9d9d9;
 }

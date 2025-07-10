@@ -1,18 +1,22 @@
 import React from "react";
 import "./Post.css";
-import Image from "next/image";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { PostType } from "../Posts/Posts";
+import { useDispatch } from "react-redux";
 
 const Post = ({
   id,
   content,
   deletePost,
+  openModal,
 }: {
   id: string;
   content: string;
-  deletePost: any;
+  deletePost: (id: string) => void;
+  openModal: ({ id, content }: PostType) => void;
 }) => {
   return (
-    <div className="post">
+    <div className="post" onClick={() => openModal({ id, content })}>
       <div className="post__header">
         <h3 className="post__header__heading">#{id}</h3>
       </div>
@@ -23,7 +27,9 @@ const Post = ({
         <button
           className="post__footer__button post--icon"
           onClick={() => deletePost(id)}
-        ></button>
+        >
+          <FaRegTrashAlt size={16} />
+        </button>
       </div>
     </div>
   );

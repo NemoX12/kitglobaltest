@@ -8,14 +8,18 @@ import Post from "../Post/Post";
 import CreatePost from "../CreatePost/CreatePost";
 import { db } from "@/app/config/firebaseConfig";
 import { getAllPosts, removePost } from "@/app/store/postsSlice";
+import { openModalAction } from "@/app/store/postModalSlice";
+import PostModal from "../PostModal/PostModal";
 
-type PostType = {
+export type PostType = {
   id: string;
   content: string;
 };
 
 const Posts = () => {
   const postsList: PostType[] = useSelector((state: any) => state.posts.posts);
+  const postsModal: PostType = useSelector((state: any) => state.postModal.post);
+
   const dispatch = useDispatch();
 
   const getPosts = async () => {
@@ -34,24 +38,32 @@ const Posts = () => {
     dispatch(removePost(id));
   };
 
+  const openModal = ({ id, content }: PostType) => {
+    dispatch(openModalAction({ id, content }));
+  };
+
   useEffect(() => {
     getPosts();
   }, []);
 
   return (
-    <div className="posts">
-      <CreatePost />
-      <div className="posts__container">
-        {postsList?.map((post) => (
-          <Post
-            key={post.id}
-            id={post.id}
-            content={post.content}
-            deletePost={deletePost}
-          />
-        ))}
+    <>
+      {postsModal !== null && <PostModal />}
+      <div className="posts">
+        <CreatePost />
+        <div className="posts__container">
+          {postsList?.map((post) => (
+            <Post
+              key={post.id}
+              id={post.id}
+              content={post.content}
+              deletePost={deletePost}
+              openModal={openModal}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

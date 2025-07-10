@@ -8,17 +8,19 @@ import { db } from "@/app/config/firebaseConfig";
 import "./CreatePost.css";
 import { useDispatch } from "react-redux";
 import { addPosts } from "@/app/store/postsSlice";
+import { $ZodIssue } from "zod/v4/core";
 
 const PostSchema = z.object({
   id: z.string(),
   content: z
     .string("Is not a text!")
-    .min(12, "The text should be longer than 12 characters.")
+    .min(1, "The text should be longer than 1 character.")
     .max(256, "The text should be shorter than 256 characters."),
 });
 
 const CreatePost = () => {
   const [postContent, setPostContent] = useState<string>("");
+  const [error, setError] = useState<$ZodIssue[] | null>();
   const dispatch = useDispatch();
 
   const createPost = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,12 +36,15 @@ const CreatePost = () => {
     const result = z.safeParse(PostSchema, data);
     if (result.success) {
       data = result.data;
+      setError(null);
     } else {
-      console.error(result.error.issues);
+      setError(result.error.issues);
+      return;
     }
 
     await setDoc(doc(db, "posts", uid), data);
     dispatch(addPosts([data]));
+    setPostContent("");
   };
 
   return (
@@ -50,8 +55,12 @@ const CreatePost = () => {
           id="createpostinput"
           className="createpost__form__input"
           onChange={(e) => setPostContent(e.target.value)}
+          value={postContent}
         />
-        <button type="submit">Post</button>
+        <p className="form--error">{error && error[0].message}</p>
+        <button className="createpost__form__button" type="submit">
+          Post
+        </button>
       </form>
     </div>
   );
